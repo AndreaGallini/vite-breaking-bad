@@ -7,7 +7,16 @@
     <div class="found">
       <p class="textfound">Found {{ caracter.length }} Characters</p>
     </div>
-    <div class="flex">
+    <div v-if="loading">
+      <div id="loading_screen">
+        <h1>Loading...</h1>
+        <p>
+          La pagina è in caricamento<br />
+          Resta connesso e non cambiare sito!
+        </p>
+      </div>
+    </div>
+    <div class="flex" v-if="!loading">
       <CardComponent v-for="(item, index) in caracter" :obj="item" />
     </div>
   </div>
@@ -23,14 +32,17 @@ export default {
   data() {
     return {
       caracter: [],
+      loading: false,
     };
   },
   methods: {
     callApi() {
+      this.loading = true;
       axios.get("https://www.breakingbadapi.com/api/characters").then((res) => {
         console.log(res.data);
         this.caracter.push(...res.data);
         console.log(this.caracter);
+        this.loading = false;
       });
     },
   },
@@ -74,5 +86,19 @@ export default {
   display: flex;
   align-items: center;
   padding-left: 2rem;
+}
+#loading_screen {
+  display: block;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  height: 100%;
+  width: 100%;
+  color: #fff;
+  text-align: center;
+  padding: 80px;
+  background-color: #000;
+  background-color: rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
 }
 </style>
