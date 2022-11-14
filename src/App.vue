@@ -1,8 +1,11 @@
 <template>
   <HeaderComponent />
+  <div class="innerUno">
+    <SearchComponent />
+  </div>
   <div class="inner-container">
     <div class="found">
-      <p>Found</p>
+      <p class="textfound">Found {{ caracter.length }} Characters</p>
     </div>
     <div class="flex">
       <CardComponent v-for="(item, index) in caracter" :obj="item" />
@@ -14,6 +17,7 @@
 import axios from "axios";
 import CardComponent from "./components/CardComponent.vue";
 import HeaderComponent from "./components/HeaderComponent.vue";
+import SearchComponent from "./components/SearchComponent.vue";
 
 export default {
   data() {
@@ -33,12 +37,20 @@ export default {
   mounted() {
     this.callApi();
   },
-  components: { HeaderComponent, CardComponent },
+  components: { HeaderComponent, CardComponent, SearchComponent },
 };
 </script>
 
 <style lang="scss" scoped>
 @use "./assets/styles/partials/variables" as *;
+.textfound {
+  color: white;
+  font-weight: 700;
+}
+.innerUno {
+  width: 1170px;
+  margin: 3rem auto;
+}
 .wrapper {
   max-width: 1300px;
   margin: 0 auto;
@@ -58,6 +70,9 @@ export default {
 .found {
   background-color: $InternoBackground;
   color: white;
-  min-height: 100px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding-left: 2rem;
 }
 </style>
