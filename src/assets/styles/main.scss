@@ -1,0 +1,10 @@
+@use "./partials/variables" as *;
+@import "@fontsource/montserrat";
+ @import "@fontsource/montserrat/700.css";
+
+body{
+    background-color: $background;
+    height: 100vh;
+    width: 100%;
+    font-family: "Montserrat", sans-serif;
+}
