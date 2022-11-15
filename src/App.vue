@@ -4,9 +4,7 @@
     <SearchComponent @filterchar="callApi" />
   </div>
   <div class="inner-container">
-    <div class="found">
-      <p class="textfound">Found {{ store.caracter.length }} Characters</p>
-    </div>
+    <FoundComponent />
     <div v-if="store.loading">
       <div id="loading_screen">
         <h1>Loading...</h1>
@@ -25,6 +23,7 @@
 <script>
 import axios from "axios";
 import CardComponent from "./components/CardComponent.vue";
+import FoundComponent from "./components/FoundComponent.vue";
 import HeaderComponent from "./components/HeaderComponent.vue";
 import SearchComponent from "./components/SearchComponent.vue";
 import { store } from "./store.js";
@@ -41,7 +40,7 @@ export default {
       if (store.searchstatus) {
         options = {
           params: {
-            status: store.searchstatus,
+            category: store.searchstatus,
           },
         };
       }
@@ -56,16 +55,18 @@ export default {
   mounted() {
     this.callApi();
   },
-  components: { HeaderComponent, CardComponent, SearchComponent },
+  components: {
+    HeaderComponent,
+    CardComponent,
+    SearchComponent,
+    FoundComponent,
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 @use "./assets/styles/partials/variables" as *;
-.textfound {
-  color: white;
-  font-weight: 700;
-}
+
 .innerUno {
   width: 1170px;
   margin: 3rem auto;

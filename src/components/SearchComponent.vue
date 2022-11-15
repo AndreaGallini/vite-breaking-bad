@@ -1,13 +1,13 @@
 <template>
   <div>
     <select name="" id="" v-model="store.searchstatus" @change="searchStatus">
-      <option selected value="">All</option>
+      <option selected value="">Select Category</option>
       <option
-        v-for="(status, index) in statusOptions"
+        v-for="(category, index) in categoryOptions"
         :key="index"
-        :value="status"
+        :value="category"
       >
-        {{ status }}
+        {{ category }}
       </option>
     </select>
   </div>
@@ -19,12 +19,13 @@ export default {
   data() {
     return {
       store,
-      statusOptions: ["Alive", "Presumed Dead", "Deceased"],
+      categoryOptions: ["Breaking Bad", "Better Call Saul"],
     };
   },
   methods: {
     searchStatus() {
       this.$emit("filterchar");
+      store.caracter = [];
     },
   },
   props: {
