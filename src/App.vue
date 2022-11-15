@@ -1,13 +1,13 @@
 <template>
   <HeaderComponent />
   <div class="innerUno">
-    <SearchComponent />
+    <SearchComponent @filterchar="callApi" />
   </div>
   <div class="inner-container">
     <div class="found">
-      <p class="textfound">Found {{ caracter.length }} Characters</p>
+      <p class="textfound">Found {{ store.caracter.length }} Characters</p>
     </div>
-    <div v-if="loading">
+    <div v-if="store.loading">
       <div id="loading_screen">
         <h1>Loading...</h1>
         <p>
@@ -16,8 +16,8 @@
         </p>
       </div>
     </div>
-    <div class="flex" v-if="!loading">
-      <CardComponent v-for="(item, index) in caracter" :obj="item" />
+    <div class="flex" v-if="!store.loading">
+      <CardComponent v-for="(item, index) in store.caracter" :obj="item" />
     </div>
   </div>
 </template>
@@ -27,22 +27,29 @@ import axios from "axios";
 import CardComponent from "./components/CardComponent.vue";
 import HeaderComponent from "./components/HeaderComponent.vue";
 import SearchComponent from "./components/SearchComponent.vue";
+import { store } from "./store.js";
 
 export default {
   data() {
     return {
-      caracter: [],
-      loading: false,
+      store,
     };
   },
   methods: {
     callApi() {
-      this.loading = true;
-      axios.get("https://www.breakingbadapi.com/api/characters").then((res) => {
-        console.log(res.data);
-        this.caracter.push(...res.data);
-        console.log(this.caracter);
-        this.loading = false;
+      let options = null;
+      if (store.searchstatus) {
+        options = {
+          params: {
+            status: store.searchstatus,
+          },
+        };
+      }
+      store.loading = true;
+      axios.get(store.apiURL, options).then((res) => {
+        store.caracter.push(...res.data);
+        console.log(store.caracter);
+        store.loading = false;
       });
     },
   },

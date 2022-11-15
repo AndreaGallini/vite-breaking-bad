@@ -8,13 +8,10 @@
 </template>
 
 <script>
-import { store } from "../assets/store";
 export default {
   props: ["obj"],
   data() {
-    return {
-      store,
-    };
+    return {};
   },
 };
 </script>
